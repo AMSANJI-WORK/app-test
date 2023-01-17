@@ -22,7 +22,7 @@ const PostSclice = createSlice({
     },
   },
 });
-export function fetchUser(id) {
+export function fetchPost(id) {
   return async (dispatch, getState) => {
     try {
       const state = getState().post;

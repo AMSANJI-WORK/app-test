@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchUser } from "../../posts/store";
+import { fetchPost } from "../../posts/store";
 
 export default function Home() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchUser(1));
+    dispatch(fetchPost(1));
   }, []);
 
   return (
