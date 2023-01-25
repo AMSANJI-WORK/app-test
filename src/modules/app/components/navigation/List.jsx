@@ -1,5 +1,6 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
+import NavigationItem from "./Item";
 
 export default function Navigation() {
   const drawer = useSelector((state) => state.drawer.opened);
@@ -11,10 +12,11 @@ export default function Navigation() {
   }, [drawer]);
   return (
     <aside className={`${calculateWidth}  shadow-2xl  p-3`}>
-      <div className={`${contentVisible}  decoration-inherit`}>
+      <div className={`${contentVisible}`}>
         <h1 className="font-black text-2xl whitespace-nowrap text-center">
           app test react
         </h1>
+        <NavigationItem />
       </div>
     </aside>
   );

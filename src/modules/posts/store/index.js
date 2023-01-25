@@ -1,20 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { PostRepository } from "./repository";
+
+export const defaultPostItem = {
+  albumId: -1,
+  id: -1,
+  title: "",
+  url: "",
+  thumbnailUrl: "",
+};
+
 const PostSclice = createSlice({
   name: "post",
   initialState: {
     data: [],
     item: {
-      albumId: -1,
-      id: -1,
-      title: "",
-      url: "",
-      thumbnailUrl: "",
+      ...defaultPostItem,
     },
     loading: false,
   },
   reducers: {
-    setUser(state, action) {
+    setPost(state, action) {
       Object.assign(state.item, action.payload);
     },
     setLoading(state, action) {
@@ -22,23 +27,20 @@ const PostSclice = createSlice({
     },
   },
 });
-export function fetchPost(id) {
-  return async (dispatch, getState) => {
-    try {
-      const state = getState().post;
-      if (state.loading) return;
-      dispatch(setLoading(true));
-      const user = await axios.get(
-        `https://jsonplaceholder.typicode.com/photos/${id}`
-      );
-      console.log(user);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
-}
 
-export const { setUser, setLoading } = PostSclice.actions;
+export const fetchPost = (id) => async (dispatch, getState) => {
+  try {
+    const state = getState().post;
+    if (state.loading) return;
+    dispatch(setLoading(true));
+    const { data = defaultPostItem } = await PostRepository.getOne(id);
+    dispatch(setPost(data));
+  } catch (error) {
+    console.log(error);
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
+
+export const { setPost, setLoading } = PostSclice.actions;
 export default PostSclice.reducer;

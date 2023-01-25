@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import AppNavbar from "../components/Navbar";
-import AppNavigation from "../components/Navigation";
+import AppNavigation from "../components/navigation/List";
 export default function DefaultLayout() {
   const drawer = useSelector((state) => state.drawer.opened);
   const calculateMarginContent = useMemo(() => {

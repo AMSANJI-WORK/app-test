@@ -2,11 +2,11 @@ import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggledDrawer } from "../store/drawer";
 export default function Navbar() {
+  const dispatch = useDispatch();
   const drawer = useSelector((state) => state.drawer.opened);
   const navbarWidth = useMemo(() => {
     return drawer ? "w-[calc(100%_-_240px)]" : "w-screen";
   }, [drawer]);
-  const dispatch = useDispatch();
   return (
     <header
       className={`absolute flex flex-nowrap ${navbarWidth}  shadow-xl right-0 p-4`}
