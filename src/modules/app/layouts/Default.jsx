@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import AppNavbar from "../components/Navbar";
-import AppNavigation from "../components/navigation/List";
+import AppNavigationDrawer from "../components/navigation/Drawer";
 export default function DefaultLayout() {
   const drawer = useSelector((state) => state.drawer.opened);
   const calculateMarginContent = useMemo(() => {
@@ -12,7 +12,7 @@ export default function DefaultLayout() {
     <>
       <AppNavbar />
       <div className="flex min-h-screen overflow-x-auto">
-        <AppNavigation />
+        <AppNavigationDrawer />
         <div className={`${calculateMarginContent} p-3  mt-20`}>
           <Outlet />
         </div>

@@ -1,31 +1,38 @@
 import PropTypes from "prop-types";
+import { useCallback, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 
-function Item(props) {
+function NavigationItem(props) {
+  const baseClass = useMemo(() => {
+    return "p-3 inline-flex border-b border-gray-200 w-full hover:bg-gray-100 hover:text-gray-500  transition duration-300 cursor-pointer";
+  }, []);
+  const linkActiveClass = useMemo(() => {
+    return `bg-blue-400 font-bold text-white ${baseClass}`;
+  }, []);
+  const nestedClass = useMemo(() => (props.isnested ? "pl-2" : ""), []);
+  const setNavLinkActive = useCallback(
+    (active) => (active ? linkActiveClass : baseClass),
+    [linkActiveClass, baseClass]
+  );
+
   return (
     <NavLink
       to={props.target}
-      className="
-        inline-flex justify-around
-        px-6
-        py-2
-        border-b border-gray-200
-        w-full
-        hover:bg-gray-100 hover:text-gray-500
-        focus:outline-none focus:ring-0 focus:bg-gray-200 focus:text-gray-600
-        transition
-        duration-500
-        cursor-pointer
-      "
+      className={({ isActive }) => setNavLinkActive(isActive)}
     >
-      hello from link
+      <span className={`flex ${nestedClass}`}>
+        {props.icon}
+        {props.title}
+      </span>
     </NavLink>
   );
 }
 
-Item.propTypes = {
+NavigationItem.propTypes = {
   target: PropTypes.string,
-  
+  title: PropTypes.string,
+  icon: PropTypes.element,
+  isnested: PropTypes.bool,
 };
 
 export default NavigationItem;
